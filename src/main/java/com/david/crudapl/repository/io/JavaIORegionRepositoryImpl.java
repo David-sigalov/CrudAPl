@@ -3,14 +3,15 @@ package com.david.crudapl.repository.io;
 import com.david.crudapl.model.Region;
 import com.david.crudapl.repository.RegionRepository;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 
 public class JavaIORegionRepositoryImpl implements RegionRepository {
@@ -34,13 +35,11 @@ public class JavaIORegionRepositoryImpl implements RegionRepository {
 
             }
 
-            for(int i = 0; i < strings.size(); i++) {
-                regions.add(new Region(Long.parseLong(strings.get(i).split(", ")[0]),strings.get(i).split(", ")[1])); //вот здесь ошибка почему-то
+            for (int i = 0; i < strings.size(); i++) {
+                regions.add(new Region(Long.parseLong(strings.get(i).split(", ")[0]), strings.get(i).split(", ")[1])); //вот здесь ошибка почему-то
                 System.out.println(strings.get(i));
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,14 +63,12 @@ public class JavaIORegionRepositoryImpl implements RegionRepository {
 
             }
 
-            for(int i = 0; i < strings.size(); i++) {
-                if(strings.get(i).split(", ")[0].equals(String.valueOf(aLong))){
+            for (int i = 0; i < strings.size(); i++) {
+                if (strings.get(i).split(", ")[0].equals(String.valueOf(aLong))) {
                     region = new Region(Long.parseLong(strings.get(i).split(", ")[0]), strings.get(i).split(", ")[1]);
                 }
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -84,12 +81,12 @@ public class JavaIORegionRepositoryImpl implements RegionRepository {
         File file = new File(REGION_FILE_PATH);
         FileWriter fr = null;
         try {
-            fr = new FileWriter(file,true);
+            fr = new FileWriter(file, true);
             fr.write(region.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
-        }finally{
+        } finally {
             try {
                 fr.close();
             } catch (IOException e) {
@@ -115,7 +112,7 @@ public class JavaIORegionRepositoryImpl implements RegionRepository {
             String name = scanner.next();
 
             while (line != null) {
-                if(region.getId() == Long.parseLong(line.split(", ")[0])) {
+                if (region.getId() == Long.parseLong(line.split(", ")[0])) {
                     region.setId(id);
                     region.setName(name);
                 } else {
@@ -126,12 +123,11 @@ public class JavaIORegionRepositoryImpl implements RegionRepository {
 
 
             FileWriter fwOb = new FileWriter(REGION_FILE_PATH, false);
-            PrintWriter pwOb = new PrintWriter(fwOb, false);
 
             try {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
                 String lineSeparator = System.getProperty("line.separator");
-                for(int i = 0; i < strings.size(); i++) {
+                for (int i = 0; i < strings.size(); i++) {
                     writer.write(strings.get(i) + lineSeparator);
                 }
                 writer.write(String.valueOf(region));
@@ -142,8 +138,6 @@ public class JavaIORegionRepositoryImpl implements RegionRepository {
             }
 
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -161,7 +155,6 @@ public class JavaIORegionRepositoryImpl implements RegionRepository {
             BufferedReader reader = new BufferedReader(fr);
 
 
-
             String line = reader.readLine();
 
             while (line != null) {
@@ -172,13 +165,10 @@ public class JavaIORegionRepositoryImpl implements RegionRepository {
             }
 
 
-            FileWriter fwOb = new FileWriter(REGION_FILE_PATH, false);
-            PrintWriter pwOb = new PrintWriter(fwOb, false);
-
             try {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
                 String lineSeparator = System.getProperty("line.separator");
-                for(int i = 0; i < strings.size(); i++) {
+                for (int i = 0; i < strings.size(); i++) {
                     writer.write(strings.get(i) + lineSeparator);
                 }
                 writer.flush();
@@ -188,10 +178,6 @@ public class JavaIORegionRepositoryImpl implements RegionRepository {
             }
 
 
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
